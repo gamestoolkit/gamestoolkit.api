@@ -1,0 +1,6 @@
+@api.url = {{HostAddress}}
+
+GET {{api.url}}/weatherforecast/
+Accept: application/json
+
+###
