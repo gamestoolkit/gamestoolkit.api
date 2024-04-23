@@ -1,4 +1,17 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+
+using gamestoolkit.api.Repositories;
+using DapperRepos = gamestoolkit.api.Repositories.Dapper;
+using EFRepos = gamestoolkit.api.Repositories.EF;
+using DapperQueries = gamestoolkit.api.Queries.Dapper;
+using EFQueries = gamestoolkit.api.Queries.EF;
+using gamestoolkit.api.Queries;
+
+
 var builder = WebApplication.CreateBuilder(args);
+
+var useDapper = false;
 
 // Add services to the container.
 
@@ -6,6 +19,28 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+if (useDapper)
+{
+    builder.Services.AddSingleton<GTKDapperContext>();
+
+    builder.Services.AddScoped<IPostRepository, DapperRepos.PostRepository>();
+
+    builder.Services.AddScoped<IPostQueries, DapperQueries.PostQueries>();
+}
+else
+{
+    builder.Services.AddDbContext<GTKContext>(options =>
+        options.UseLazyLoadingProxies()
+               .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+    builder.Services.AddScoped<IPostRepository, EFRepos.PostRepository>();
+
+    builder.Services.AddScoped<IPostQueries, EFQueries.PostQueries>();
+
+    builder.Services.AddAutoMapper(typeof(Program));
+}
+
 
 var app = builder.Build();
 
