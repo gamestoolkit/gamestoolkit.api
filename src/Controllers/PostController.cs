@@ -1,4 +1,5 @@
 ﻿using gamestoolkit.api.Commands;
+using gamestoolkit.api.Common;
 using gamestoolkit.api.Models;
 using gamestoolkit.api.Queries;
 using gamestoolkit.api.Services;
@@ -45,25 +46,28 @@ namespace gamestoolkit.api.Controllers
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public async Task<ActionResult<CreateResponse>> CreateAsync([FromBody] CreatePostCommand createPostCommand)
+        public async Task<IActionResult> CreateAsync([FromBody] CreatePostCommand createPostCommand)
         {
             var response = await _postServices.CreatePostAsync(createPostCommand);
-            return CreatedAtAction(
+            return response.GetRestResponse(this);
+           /* return CreatedAtAction(
                 nameof(GetByIdAsync),
                 new { id = response.Id },
-                response);
+                response);*/
         }
 
-        [HttpPut]
-        public IActionResult UpdateAsync()
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] int id, [FromBody] UpdatePostCommand updatePostCommand)
         {
-            throw new NotImplementedException();
+            var response = await _postServices.UpdatePostAsync(id, updatePostCommand);
+            return response.GetRestResponse(this);
         }
 
-        [HttpDelete]
-        public IActionResult DeleteAsync()
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync([FromRoute] int id)
         {
-            throw new NotImplementedException();
+            var response = await _postServices.DeletePostAsync(id);
+            return response.GetRestResponse(this);
         }
     }
 }
