@@ -57,6 +57,7 @@ namespace gamestoolkit.tests.Unit
 
             // Check
             Assert.NotNull(result);
+            Assert.Equal(VALID_ID, result.Id);
             repositoryMock.Verify(m => m.CreatePostAsync(It.IsAny<Post>()), Times.Exactly(1));
         }
 
