@@ -7,7 +7,7 @@ using EFRepos = gamestoolkit.api.Repositories.EF;
 using DapperQueries = gamestoolkit.api.Queries.Dapper;
 using EFQueries = gamestoolkit.api.Queries.EF;
 using gamestoolkit.api.Queries;
-
+using gamestoolkit.api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +19,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<PostServices>();
 
 if (useDapper)
 {
@@ -27,6 +28,7 @@ if (useDapper)
     builder.Services.AddScoped<IPostRepository, DapperRepos.PostRepository>();
 
     builder.Services.AddScoped<IPostQueries, DapperQueries.PostQueries>();
+    
 }
 else
 {
