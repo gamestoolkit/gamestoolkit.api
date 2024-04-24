@@ -4,8 +4,8 @@ namespace gamestoolkit.api.Queries
 {
     public interface IPostQueries
     {
-        public Task<List<PostWithoutContent>> GetAllPostsWithoutContentAsync();
+        public Task<Response<List<PostWithoutContent>>> GetAllPostsWithoutContentAsync();
 
-        public Task<PostWithContent> GetPostByIdAsync(int id);
+        public Task<Response<PostWithContent>> GetPostByIdAsync(int id);
     }
 }

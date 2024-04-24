@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using gamestoolkit.api.Repositories;
 using gamestoolkit.api.ViewModels;
+using Microsoft.AspNetCore.Http;
 using System.Data;
 
 namespace gamestoolkit.api.Queries.Dapper
@@ -12,7 +13,7 @@ namespace gamestoolkit.api.Queries.Dapper
         {
             _context = context;
         }
-        public async Task<List<PostWithoutContent>> GetAllPostsWithoutContentAsync()
+        public async Task<Response<List<PostWithoutContent>>> GetAllPostsWithoutContentAsync()
         {
             var query = @"
                 SELECT 
@@ -29,11 +30,14 @@ namespace gamestoolkit.api.Queries.Dapper
             {
                 var posts = await connection.QueryAsync<PostWithoutContent>(query, parameters);
 
-                return posts.ToList();
+                return new Response<List<PostWithoutContent>> {
+                    Content = posts.ToList(),
+                    StatusCode = System.Net.HttpStatusCode.OK
+                };
             }
         }
 
-        public async Task<PostWithContent> GetPostByIdAsync(int id)
+        public async Task<Response<PostWithContent>> GetPostByIdAsync(int id)
         {
             var query = @"
                 SELECT 
@@ -53,7 +57,10 @@ namespace gamestoolkit.api.Queries.Dapper
             {
                 var post = await connection.QuerySingleAsync<PostWithContent>(query, parameters);
 
-                return post;
+                return new Response<PostWithContent> {
+                    Content = post,
+                    StatusCode = System.Net.HttpStatusCode.OK
+                };
             }
         }
     }

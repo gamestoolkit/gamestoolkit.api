@@ -16,11 +16,11 @@ namespace gamestoolkit.api.Services
             _mapper = mapper;
         }
 
-        public async Task<CreateResponse> CreatePostAsync(CreatePostCommand createPostCommand)
+        public async Task<Response<CreateResponseContents>> CreatePostAsync(CreatePostCommand createPostCommand)
         {
             var post = _mapper.Map<Post>(createPostCommand);
             var id = await _postRepository.CreatePostAsync(post);
-            return new CreateResponse { Id = id };
+            return new Response<CreateResponseContents> { Content = new CreateResponseContents { Id = id, Message = "Creation was successful" } };
         }
 
         public async Task<NoContentResponse> UpdatePostAsync(int id, UpdatePostCommand updatePostCommand)

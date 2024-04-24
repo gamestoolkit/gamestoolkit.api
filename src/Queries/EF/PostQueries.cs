@@ -15,14 +15,20 @@ namespace gamestoolkit.api.Queries.EF
             _mapper = mapper;
         }
 
-        public async Task<List<PostWithoutContent>> GetAllPostsWithoutContentAsync()
+        public async Task<Response<List<PostWithoutContent>>> GetAllPostsWithoutContentAsync()
         {
-            return _mapper.Map<List<PostWithoutContent>>(await _context.Posts.AsNoTracking().ToListAsync());
+            return new Response<List<PostWithoutContent>> { 
+                Content = _mapper.Map<List<PostWithoutContent>>(await _context.Posts.AsNoTracking().ToListAsync()),
+                StatusCode = System.Net.HttpStatusCode.OK
+            };
         }
 
-        public async Task<PostWithContent> GetPostByIdAsync(int id)
+        public async Task<Response<PostWithContent>> GetPostByIdAsync(int id)
         {
-            return _mapper.Map<PostWithContent>(await _context.Posts.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id));
+            return new Response<PostWithContent> { 
+                Content = _mapper.Map<PostWithContent>(await _context.Posts.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id)),
+                StatusCode = System.Net.HttpStatusCode.OK
+            };
         }
     }
 }
