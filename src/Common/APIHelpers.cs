@@ -17,7 +17,12 @@ namespace gamestoolkit.api.Common
             switch (baseResponse.StatusCode)
             {
                 case HttpStatusCode.OK:
-                    return instigator.Ok(baseResponse);
+                    {
+                        var response = baseResponse.GetContents();
+                        if (response == null)
+                            return instigator.Ok();
+                        return instigator.Ok(response);
+                    }                    
                 case HttpStatusCode.NoContent:
                     return instigator.NoContent();
                 case HttpStatusCode.NotFound:
