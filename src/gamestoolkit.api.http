@@ -4,3 +4,25 @@ GET {{api.url}}/weatherforecast/
 Accept: application/json
 
 ###
+
+GET {{api.url}}/Post
+Accept: application/json
+
+###
+
+GET {{api.url}}/Post/1
+Accept: application/json
+
+###
+
+POST {{api.url}}/Post
+Accept: application/json
+Content-Type: application/json
+
+{
+  "Title": "Test Post New",
+  "Description": "New Pipe Test Post",
+  "Author": "Juan Felipe Canizares",
+  "ContentHtml": "No content",
+  "PostImage": "No Image"
+}
