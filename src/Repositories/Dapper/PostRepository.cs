@@ -16,8 +16,8 @@ namespace gamestoolkit.api.Repositories.Dapper
         {
             var query = @"
                 INSERT INTO Posts (Title, Description, Author, ContentHtml, PostImage)
-                VALUES (@Title, @Description, @Author, @ContentHtml, @PostImage)
-                RETURNING id";
+                OUTPUT INSERTED.Id 
+                VALUES (@Title, @Description, @Author, @ContentHtml, @PostImage)";
 
             var parameters = new DynamicParameters();
             parameters.Add("Title", newPost.Title, DbType.String);

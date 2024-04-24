@@ -12,7 +12,7 @@ using gamestoolkit.api.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var useDapper = false;
+var useDapper = true;
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -39,9 +39,9 @@ else
     builder.Services.AddScoped<IPostRepository, EFRepos.PostRepository>();
 
     builder.Services.AddScoped<IPostQueries, EFQueries.PostQueries>();
-
-    builder.Services.AddAutoMapper(typeof(Program));
 }
+
+builder.Services.AddAutoMapper(typeof(Program));
 
 
 // Errors
