@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using gamestoolkit.api.Repositories;
 using gamestoolkit.api.ViewModels;
+using System.Data;
 
 namespace gamestoolkit.api.Queries.Dapper
 {
@@ -29,6 +30,29 @@ namespace gamestoolkit.api.Queries.Dapper
                 var posts = await connection.QueryAsync<PostWithoutContent>(query, parameters);
 
                 return posts.ToList();
+            }
+        }
+
+        public async Task<PostWithoutContent> GetPostByIdAsync(int id)
+        {
+            var query = @"
+                SELECT 
+                    Id,
+                    Title,
+                    Description,
+                    Author,
+                    PostImage
+                FROM Posts
+                WHERE Id = @Id";
+
+            var parameters = new DynamicParameters();
+            parameters.Add("Id", id, DbType.Int32);
+
+            using (var connection = _context.CreateConnection())
+            {
+                var post = await connection.QuerySingleAsync<PostWithoutContent>(query, parameters);
+
+                return post;
             }
         }
     }

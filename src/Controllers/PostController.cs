@@ -9,7 +9,7 @@ namespace gamestoolkit.api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class PostController : Controller
+    public class PostController : ControllerBase
     {
         private readonly IPostQueries _postQueries;
         private readonly PostServices _postServices;
@@ -27,18 +27,30 @@ namespace gamestoolkit.api.Controllers
             return await _postQueries.GetAllPostsWithoutContentAsync();
         }
 
-        [HttpPost]
+        [HttpGet("{id}", Name = nameof(GetByIdAsync))]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
+        public async Task<ActionResult<PostWithoutContent>> GetByIdAsync(int id)
+        {
+            var post = await _postQueries.GetPostByIdAsync(id);
+            if (post is null)
+            {
+                return NotFound();
+            }
+            return Ok(post);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public async Task<CreationResponse> CreateAsync(CreatePostCommand createPostCommand)
+        public async Task<ActionResult<CreateResponse>> CreateAsync([FromBody] CreatePostCommand createPostCommand)
         {
             var response = await _postServices.CreatePostAsync(createPostCommand);
             return CreatedAtAction(
-                nameof(GetAllAsync),
-                new { },
-                response
-            );
+                nameof(GetByIdAsync),
+                new { id = response.Id },
+                response);
         }
 
         [HttpPut]
