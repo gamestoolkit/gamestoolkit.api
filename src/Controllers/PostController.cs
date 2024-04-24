@@ -23,23 +23,20 @@ namespace gamestoolkit.api.Controllers
 
         [HttpGet]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<List<PostWithoutContent>>> GetAllAsync()
+        public async Task<IActionResult> GetAllAsync()
         {
-            return await _postQueries.GetAllPostsWithoutContentAsync();
+            var response = await _postQueries.GetAllPostsWithoutContentAsync();
+            return response.GetRestResponse(this);
         }
 
         [HttpGet("{id}")]
         [ActionName(nameof(GetByIdAsync))]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public async Task<ActionResult<PostWithoutContent>> GetByIdAsync(int id)
+        public async Task<IActionResult> GetByIdAsync(int id)
         {
-            var post = await _postQueries.GetPostByIdAsync(id);
-            if (post is null)
-            {
-                return NotFound();
-            }
-            return Ok(post);
+            var response = await _postQueries.GetPostByIdAsync(id);
+            return response.GetRestResponse(this);
         }
 
         [HttpPost]
