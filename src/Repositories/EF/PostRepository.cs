@@ -18,5 +18,23 @@ namespace gamestoolkit.api.Repositories.EF
 
             return entity.Entity.Id;
         }
+
+        public async Task DeletePostAsync(Post postToDelete)
+        {
+            _context.Posts.Remove(postToDelete);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<Post?> GetPostByIdAsync(int id)
+        {
+            var post = await _context.Posts.FirstOrDefaultAsync(p => p.Id == id);
+            return post;
+        }
+
+        public async Task UpdatePostAsync(Post post)
+        {
+            _context.Posts.Update(post);
+            await _context.SaveChangesAsync();
+        }
     }
 }

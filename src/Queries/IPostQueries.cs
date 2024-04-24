@@ -6,6 +6,6 @@ namespace gamestoolkit.api.Queries
     {
         public Task<List<PostWithoutContent>> GetAllPostsWithoutContentAsync();
 
-        public Task<PostWithoutContent> GetPostByIdAsync(int id);
+        public Task<PostWithContent> GetPostByIdAsync(int id);
     }
 }

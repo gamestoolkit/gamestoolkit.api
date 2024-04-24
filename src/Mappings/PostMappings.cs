@@ -11,10 +11,12 @@ namespace gamestoolkit.api.Mappings
         {
             #region Queries
             CreateMap<Post, PostWithoutContent>();
+            CreateMap<Post, PostWithContent>();
             #endregion
 
             #region Commands
             CreateMap<CreatePostCommand, Post>();
+            CreateMap<UpdatePostCommand, Post>();
             #endregion
         }
     }

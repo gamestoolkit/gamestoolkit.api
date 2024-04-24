@@ -20,9 +20,9 @@ namespace gamestoolkit.api.Queries.EF
             return _mapper.Map<List<PostWithoutContent>>(await _context.Posts.AsNoTracking().ToListAsync());
         }
 
-        public async Task<PostWithoutContent> GetPostByIdAsync(int id)
+        public async Task<PostWithContent> GetPostByIdAsync(int id)
         {
-            return _mapper.Map<PostWithoutContent>(await _context.Posts.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id));
+            return _mapper.Map<PostWithContent>(await _context.Posts.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id));
         }
     }
 }

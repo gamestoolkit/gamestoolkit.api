@@ -20,9 +20,29 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "Title": "Test Post New",
+  "Title": "Test Post New Dapper",
   "Description": "New Pipe Test Post",
   "Author": "Juan Felipe Canizares",
   "ContentHtml": "No content",
   "PostImage": "No Image"
 }
+
+###
+
+PUT {{api.url}}/Post/1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "Title": "Test Post Changed",
+  "Description": "New Pipe Test Post",
+  "Author": "Juan Felipe Canizares",
+  "ContentHtml": "No content",
+  "PostImage": "No Image"
+}
+
+###
+
+DELETE {{api.url}}/Post/14
+Accept: application/json
+Content-Type: application/json

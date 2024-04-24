@@ -33,7 +33,7 @@ namespace gamestoolkit.api.Queries.Dapper
             }
         }
 
-        public async Task<PostWithoutContent> GetPostByIdAsync(int id)
+        public async Task<PostWithContent> GetPostByIdAsync(int id)
         {
             var query = @"
                 SELECT 
@@ -41,7 +41,8 @@ namespace gamestoolkit.api.Queries.Dapper
                     Title,
                     Description,
                     Author,
-                    PostImage
+                    PostImage,
+                    ContentHtml
                 FROM Posts
                 WHERE Id = @Id";
 
@@ -50,7 +51,7 @@ namespace gamestoolkit.api.Queries.Dapper
 
             using (var connection = _context.CreateConnection())
             {
-                var post = await connection.QuerySingleAsync<PostWithoutContent>(query, parameters);
+                var post = await connection.QuerySingleAsync<PostWithContent>(query, parameters);
 
                 return post;
             }
