@@ -11,7 +11,7 @@ using gamestoolkit.api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var useDapper = false;
+var useDapper = true;
 
 // Add services to the container.
 
@@ -39,9 +39,9 @@ else
     builder.Services.AddScoped<IPostRepository, EFRepos.PostRepository>();
 
     builder.Services.AddScoped<IPostQueries, EFQueries.PostQueries>();
-
-    builder.Services.AddAutoMapper(typeof(Program));
 }
+
+builder.Services.AddAutoMapper(typeof(Program));
 
 
 var app = builder.Build();
