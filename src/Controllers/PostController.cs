@@ -27,7 +27,8 @@ namespace gamestoolkit.api.Controllers
             return await _postQueries.GetAllPostsWithoutContentAsync();
         }
 
-        [HttpGet("{id}", Name = nameof(GetByIdAsync))]
+        [HttpGet("{id}")]
+        [ActionName(nameof(GetByIdAsync))]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         public async Task<ActionResult<PostWithoutContent>> GetByIdAsync(int id)
