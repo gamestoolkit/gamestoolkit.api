@@ -12,7 +12,7 @@ using gamestoolkit.api.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var useDapper = true;
+var useDapper = false;
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -56,10 +56,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+else 
+{
+    app.UseHttpsRedirection();
     app.UseExceptionHandler();
 }
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
