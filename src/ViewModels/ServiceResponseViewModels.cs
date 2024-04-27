@@ -4,7 +4,7 @@ namespace gamestoolkit.api.ViewModels
 {
     public class BaseResponse
     {
-        public HttpStatusCode StatusCode { get; set; }
+        public HttpStatusCode StatusCode { get; set; } = HttpStatusCode.OK;
 
         virtual public object? GetContents() 
         {
